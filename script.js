@@ -32,7 +32,20 @@ document.addEventListener("DOMContentLoaded", function(){
     })
 
     equal.addEventListener("click", function(){
-        calculate()
+        if(currentValue != '' && previousValue != ''){
+            calculate()
+            previousScreen.textContent = '';
+            if(previousValue.length <= 5){
+                currentScreen.textContent = previousValue; 
+            }else{
+                currentScreen.textContent = previousValue.slice(0,5) + "...";
+            }
+    }
+        
+    })
+
+    decimal.addEventListener("click", function(){
+        addDecimal();
     })
 })
 
@@ -62,9 +75,16 @@ function calculate(){
     }
 
     previousValue = roundNumber(previousValue);
-    console.log(previousValue);
+    previousValue = previousValue.toString();
+    currentValue = previousValue.toString();
 }
 
 function roundNumber(num){
     return Math.round(num * 1000) / 1000;
+}
+
+function addDecimal(){
+    if(!currentValue.includes(".")){
+        currentValue += '.';
+    }
 }
